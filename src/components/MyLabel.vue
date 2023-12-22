@@ -18,7 +18,7 @@ withDefaults(defineProps<{
 </script>
 
 <template>
-  <h1 class="text-6xl">{{ label }}</h1>
+  <h1 :class="[{'uppercase': cap}]" class="text-6xl">{{ label }}</h1>
 </template>
 
 <style scoped>
