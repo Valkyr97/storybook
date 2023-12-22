@@ -4,13 +4,6 @@ import {Meta, StoryObj} from "@storybook/vue3";
 const meta: Meta<typeof MyLabel> = {
     // title: 'Example',
     component: MyLabel,
-    tags: ['autodocs']
-}
-
-export default meta
-type Story = StoryObj<typeof MyLabel>
-
-export const Test: Story = {
     render: (args) => ({
         components: {MyLabel},
         setup() {
@@ -18,5 +11,14 @@ export const Test: Story = {
         },
         template: '<my-label v-bind="args" />'
     }),
-    args: {}
+    tags: ['autodocs']
+}
+
+export default meta
+type Story = StoryObj<typeof MyLabel>
+
+export const Test: Story = {
+    args: {
+        label: 'Test Label'
+    }
 }
