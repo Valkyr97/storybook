@@ -7,11 +7,11 @@ withDefaults(defineProps<{
   /**
    * Define the size of the label
    */
-  size: 'normal' | 'h1' | 'h2'
+  size?: 'normal' | 'h1' | 'h2'
   /**
    * Used to determine if the text is capitalized
    */
-  cap: boolean
+  cap?: boolean
 }>(), {
   label: 'Hello World',
 })
