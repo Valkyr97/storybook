@@ -8,6 +8,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@formkit/vue": "^1.4.0",
     "vue": "^3.3.11"
   },
   "devDependencies": {
