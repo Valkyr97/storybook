@@ -1,31 +1,43 @@
 <script setup lang="ts">
 import {FormKitSchema} from '@formkit/vue'
 import {computed} from "vue";
+import {nodeBuilder} from "../helpers/schemaDefinition.ts";
+import {IConditions, IformType} from "../types/formBuilderTypes.ts";
 
 const props = defineProps<{
   /**
+   * Form Type ej.(text, radio, select, checkbox, etc...
+   */
+  elType: IformType
+  /**
+   * unique id of the form
+   */
+  id?: string
+  /**
    * Label for the Form
    */
-  label: string
+  label?: string
   /**
-   * Form Type ej(text, radio, select, checkbox, etc...
-   */
-  elType: 'text' | 'select' | 'number'
-  /**
-   * String that will define the type of the form, is necessary only in some elTypes
-   */
-  elSubtype?: 'select' | 'radio' | 'checkbox'
-  /**
-   * Options in case the element is a select type
+   * Options in case the element is a select, checkbox or radio type
    */
   options?: string[]
+  /**
+   * Conditions that should be meets to visualize the form
+   */
+  conditions?: IConditions[],
+
+  validation?: any,
 }>();
 
-const schemaDefinition = computed(() => ({
-  $formkit: props.elSubtype || props.elType,
-  label: props.label,
-  options: props.options || []
-}))
+const schemaDefinition = computed(() => {
+  return nodeBuilder(props.elType, {
+    options: props.options,
+    id: props.id,
+    conditions: props.conditions,
+    label: props.label,
+    validation: props.validation
+  })
+})
 </script>
 
 <template>

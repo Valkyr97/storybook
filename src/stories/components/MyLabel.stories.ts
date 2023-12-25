@@ -21,7 +21,5 @@ export default meta
 type Story = StoryObj<typeof MyLabel>
 
 export const Test: Story = {
-    args: {
-        label: 'Test Label'
-    }
+    args: {}
 }

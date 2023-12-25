@@ -11,6 +11,9 @@ dependencies:
   vue:
     specifier: ^3.3.11
     version: 3.3.13(typescript@5.3.3)
+  vue-component-type-helpers:
+    specifier: ^1.8.26
+    version: 1.8.26
 
 devDependencies:
   '@storybook/addon-essentials':
@@ -7906,7 +7909,6 @@ packages:
 
   /vue-component-type-helpers@1.8.26:
     resolution: {integrity: sha512-CIwb7s8cqUuPpHDk+0DY8EJ/x8tzdzqw8ycX8hhw1GnbngTgSsIceHAqrrLjmv8zXi+j5XaiqYRQMw8sKyyjkw==}
-    dev: true
 
   /vue-docgen-api@4.75.1(vue@3.3.13):
     resolution: {integrity: sha512-MECZ3uExz+ssmhD/2XrFoQQs93y17IVO1KDYTp8nr6i9GNrk67AAto6QAtilW1H/pTDPMkQxJ7w/25ZIqVtfAA==}
