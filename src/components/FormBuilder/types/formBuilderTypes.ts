@@ -1,10 +1,18 @@
 export type IformType = 'text' | 'select' | 'number' | 'radio' | 'checkbox'
 
 export interface IConditions {
-    id: string
-    operator: comparisonOperator,
+    id?: string
+    operator: comparisonOperatorValue,
     value: any
 }
+
+export type comparisonOperatorValue =
+    'EQUAL' |
+    'GREATER_EQUAL' |
+    'GREATER_THAN' |
+    'LESS_EQUAL' |
+    'LESS_THAN' |
+    'NOT_EQUAL'
 
 export enum comparisonOperator {
     Equal = 'EQUAL',
@@ -13,4 +21,10 @@ export enum comparisonOperator {
     LessEqual = 'LESS_EQUAL',
     LessThan = 'LESS_THAN',
     NotEqual = 'NOT_EQUAL'
+}
+
+export enum mathOperator {
+    Add = 'ADD',
+    Mul = 'MUL',
+    Set = 'SET'
 }

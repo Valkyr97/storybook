@@ -1,13 +1,5 @@
-import {IConditions, IformType} from "../types/formBuilderTypes.ts";
-
-const operatorToSymbol = {
-    'EQUAL': '===',
-    'GREATER_EQUAL': '>=',
-    'GREATER_THAN': '>',
-    'LESS_EQUAL': '<=',
-    'LESS_THAN': '<',
-    'NOT_EQUAL': '!=='
-}
+import {IConditions, IformType} from "./types/formBuilderTypes.ts";
+import {operatorToSymbol} from "./helpers.ts";
 
 export const nodeBuilder = (type: IformType, config: {
     label?: string,

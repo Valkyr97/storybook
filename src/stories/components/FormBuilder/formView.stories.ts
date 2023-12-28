@@ -1,8 +1,8 @@
 import {Meta, StoryObj} from "@storybook/vue3";
-import FormView from "../../pages/formView.vue";
+import FormView from "../../../components/FormBuilder/formView.vue";
 
 const meta: Meta<typeof FormView> = {
-    title: 'Pages/FormView',
+    title: 'Pages/Form',
     component: FormView,
     render: (args) => ({
         components: {FormView},
@@ -11,7 +11,9 @@ const meta: Meta<typeof FormView> = {
         },
         template: '<form-view v-bind="args" />'
     }),
-    argTypes: {},
+    argTypes: {
+        initialPrice: {control: 'number'}
+    },
     tags: ['autodocs']
 }
 
@@ -19,5 +21,7 @@ export default meta
 type Story = StoryObj<typeof FormView>
 
 export const Default: Story = {
-    args: {}
+    args: {
+        initialPrice: 24
+    }
 }
