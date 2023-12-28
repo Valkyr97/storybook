@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {computed, ref} from "vue";
 import FormBuilder from "./NodeBuilder.vue";
-import {comparisonOperatorValue, IformType} from "./types/formBuilderTypes.ts";
+import {comparisonOperatorValue, IformType, mathOperator} from "./types/formBuilderTypes.ts";
 
 interface response {
   data: {
@@ -120,9 +120,11 @@ const data: response =
     }
 
 
-const props = defineProps<{
-  initialPrice: number
-}>();
+const props = withDefaults(defineProps<{
+  initialPrice?: number
+}>(), {
+  initialPrice: 0
+});
 
 // const selectInputs = ['radio', 'select', 'checkbox']
 
@@ -157,27 +159,24 @@ const priceModifiersAdjust = (modifiers: IPriceModifiers[]) => {
 const modifiers = ref([] as any[])
 
 const addModifier = (operation: string, id?: string) => {
-  console.log('add')
   if (!id) return
   modifiers.value = [...modifiers.value, {id, operation}]
 }
 
 const removeModifier = (operation: string, id?: string) => {
-  console.log('remove')
   if (!id) return
   modifiers.value = modifiers.value.filter(m => (m.operation !== operation))
 }
 
 const price = computed(() => {
   return modifiers.value.reduce((previousValue, currentValue) => {
-    console.log(currentValue)
     const [operator, value] = currentValue.operation.split(' ')
-    switch (operator.toUpperCase()) {
-      case 'SET':
+    switch (operator) {
+      case mathOperator.Set:
         return Number(value)
-      case 'ADD':
+      case mathOperator.Add:
         return Number(previousValue) + Number(value)
-      case 'MUL':
+      case mathOperator.Mul:
         return Number(previousValue) * Number(value)
     }
   }, props.initialPrice)

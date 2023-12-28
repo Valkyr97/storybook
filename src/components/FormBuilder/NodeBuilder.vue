@@ -62,12 +62,6 @@ const schemaDefinition = computed(() => {
 
 const activeModifiers = ref(Array(props.priceModifiers?.length).fill(false))
 
-// Actions
-// const handleInput = (value: any) => {
-//   previousValue.value = currentValue.value
-//   currentValue.value = value
-// };
-
 watch(() => currentValue.value, () => {
   if (!props.priceModifiers) return
 
