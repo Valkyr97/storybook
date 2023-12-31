@@ -6,11 +6,29 @@ import {comparisonOperator} from "../../../components/FormBuilder/types/formBuil
 
 type FormPropsAndCustomArgs = ComponentProps<typeof FormBuilder> & CustomArgs
 type CustomArgs = {
+    /**
+     * Minimal value allowed in the number
+     */
     min?: number,
+    /**
+     * Max value allowed in the number
+     */
     max?: number,
+    /**
+     * If the number can only be an integer, otherwise it could be either an integer or a float
+     */
     integer?: boolean,
+    /**
+     * Subtype for a select type form
+     */
     subtype?: 'radio' | 'select' | 'checkbox'
+    /**
+     * Operator used to compare the input value with the condition value
+     */
     priceModOperatorCondition: comparisonOperator
+    /**
+     * Value compared with the input value using the condition operator
+     */
     priceModValueCondition: string
     priceOperation: string
 }

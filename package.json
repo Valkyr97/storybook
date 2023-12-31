@@ -1,6 +1,22 @@
 {
-  "name": "storybook",
-  "private": true,
+  "name": "janymaro-storybook-components",
+  "private": false,
+  "license": "MIT",
+  "typings": "dist/index.d.ts",
+  "main": "dist/index.js",
+  "repository": {
+    "url": "https://github.com/Valkyr97/storybook",
+    "type": "git"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ]
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
   "version": "0.0.0",
   "type": "module",
   "scripts": {

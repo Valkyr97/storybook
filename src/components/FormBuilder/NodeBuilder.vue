@@ -35,8 +35,8 @@ const props = defineProps<{
    * And in such case, modifiers that must be applied to the price
    */
   priceModifiers?: {
-    condOperator: comparisonOperatorValue
-    condValue: string
+    condOperator?: comparisonOperatorValue
+    condValue?: any
     operation: string
   }[]
 }>();
@@ -66,7 +66,12 @@ watch(() => currentValue.value, () => {
   if (!props.priceModifiers) return
 
   props.priceModifiers.forEach((mod, index) => {
-    const condition = `"${currentValue.value}" ${operatorToSymbol[mod.condOperator]} "${mod.condValue}"`
+    if (!mod.condOperator || !mod.condValue) return
+    const condition =
+        `${isNaN(currentValue.value)
+            ? `"${currentValue.value}"` : `${Number(currentValue.value)}`}
+            ${operatorToSymbol[mod.condOperator]}
+            ${isNaN(mod.condValue) ? `"${mod.condValue}"` : `${mod.condValue}`}`
     if (!conditionValidator.test(condition)) return false
 
     if (eval(condition) && !activeModifiers.value[index]) {
