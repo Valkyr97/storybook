@@ -2,7 +2,7 @@
   "name": "janymaro-storybook-components",
   "private": false,
   "license": "MIT",
-  "typings": "dist/index.d.ts",
+  "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "repository": {
     "url": "https://github.com/Valkyr97/storybook",
@@ -17,16 +17,23 @@
     "dist",
     "src"
   ],
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
+  "peerDependencies": {
+    "@formkit/vue": ">= 1.0",
+    "typescript": ">= 4.0",
+    "vue": ">= 3"
+  },
   "scripts": {
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "build": "pnpm clean && vue-tsc && vite build && pnpm copy-files",
+    "clean": "rimraf dist/",
+    "copy-files": "copyfiles -u 1 src/**/*.css dist"
   },
   "dependencies": {
     "@formkit/vue": "^1.4.0",
-    "vue": "^3.3.11",
-    "vue-component-type-helpers": "^1.8.26"
+    "vue": "^3.3.11"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "7.6.6",
@@ -38,13 +45,27 @@
     "@storybook/vue3-vite": "7.6.6",
     "@vitejs/plugin-vue": "^4.5.2",
     "autoprefixer": "^10.4.16",
+    "copyfiles": "^2.4.1",
+    "path": "^0.12.7",
     "postcss": "^8.4.32",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "rimraf": "^5.0.5",
+    "semantic-release": "^22.0.12",
     "storybook": "7.6.6",
     "tailwindcss": "^3.4.0",
     "typescript": "^5.2.2",
     "vite": "^5.0.8",
+    "vite-plugin-dts": "^3.7.0",
+    "vue-component-type-helpers": "^1.8.26",
     "vue-tsc": "^1.8.25"
-  }
+  },
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/changelog",
+    "@semantic-release/github",
+    "@semantic-release/npm",
+    "@semantic-release/git"
+  ]
 }

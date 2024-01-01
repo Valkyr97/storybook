@@ -1,4 +1,14 @@
-export type IformType = 'choice' | 'text' | 'number' | 'scale' | 'date' | 'time' | 'section' | 'file'
+export type IformType =
+    'radio'
+    | 'text'
+    | 'number'
+    | 'scale'
+    | 'date'
+    | 'time'
+    | 'section'
+    | 'file'
+    | 'select'
+    | 'checkbox'
 
 export interface IConditions {
     id?: string
