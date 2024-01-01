@@ -1,16 +1,16 @@
-name: Semantic Releas
+name: Semantic Release
 
 on:
+#  Branches uses for the auto deploy
   push:
-    branches:
-      - master
+    branches: [master, develop]
   pull_request:
-    branches:
-      - master
-
+    branches: [master, develop]
 jobs:
   build:
     runs-on: 'ubuntu-latest'
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v2
       - name: Setup Node.js
@@ -22,7 +22,7 @@ jobs:
         run: npm install
 
       - name: Build App
-        run: yarn build
+        run: npm run build
 
       - name: Semantic Release
         env:
