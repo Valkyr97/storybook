@@ -10,7 +10,8 @@
   },
   "release": {
     "branches": [
-      "main"
+      "master",
+      "develop"
     ]
   },
   "files": [
