@@ -1,6 +1,7 @@
 name: Semantic Release
 
 on:
+#  Branches uses for the auto deploy
   push:
     branches: [master, develop]
   pull_request:
