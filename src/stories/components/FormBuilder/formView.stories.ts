@@ -30,6 +30,26 @@ const sectionsData: FormSection[] = [
         "title": "",
         "fields": [
             {
+                "name": "lqo46usg_gs3075kl",
+                "label": "Edad",
+                "type": "number",
+                "mutable": true,
+                "private": false,
+                "conditions": [],
+                "options": [],
+                "cost": [
+                    {
+                        "condition": {
+                            "name": "lqo46usg_gs3075kl",
+                            "operator": "GREATER_EQUAL",
+                            "value": "18"
+                        },
+                        "operator": "ADD",
+                        "value": "2"
+                    }
+                ]
+            },
+            {
                 "name": "lqo46vfs_f2b02lo0",
                 "label": "Bebida preferida",
                 "type": "radio",
