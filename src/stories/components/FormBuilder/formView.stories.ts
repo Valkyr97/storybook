@@ -118,6 +118,11 @@ const meta: Meta<FormViewAndCustomArgs> = {
     argTypes: {
         initialPrice: {control: 'number'},
     },
+    parameters: {
+        controls: {
+            exclude: ['priceZone']
+        }
+    },
     tags: ['autodocs']
 }
 

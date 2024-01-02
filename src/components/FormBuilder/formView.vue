@@ -40,6 +40,10 @@ const props = withDefaults(defineProps<{
    * Determine if the form should use the submit default button
    */
   defaultAction?: boolean
+  /**
+   * Classes for the node component
+   */
+  nodeClasses?: string
 }>(), {
   initialPrice: 0,
   defaultAction: true
