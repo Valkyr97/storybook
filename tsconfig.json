@@ -8,6 +8,8 @@
     "declaration": true,
     "skipLibCheck": true,
     "emitDeclarationOnly": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
 
     /* Bundler mode */
     "moduleResolution": "Node",

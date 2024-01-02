@@ -1,10 +1,10 @@
 import {Meta, StoryObj} from "@storybook/vue3";
 import {ComponentProps} from "vue-component-type-helpers";
 
-import FormBuilder from "../../../components/FormBuilder/NodeBuilder.vue";
 import {comparisonOperator} from "../../../components/FormBuilder/types/formBuilderTypes.ts";
+import {NodeBuilder} from "../../../index.ts";
 
-type FormPropsAndCustomArgs = ComponentProps<typeof FormBuilder> & CustomArgs
+type FormPropsAndCustomArgs = ComponentProps<typeof NodeBuilder> & CustomArgs
 type CustomArgs = {
     /**
      * Minimal value allowed in the number
@@ -35,7 +35,7 @@ type CustomArgs = {
 
 const meta: Meta<FormPropsAndCustomArgs> = {
     title: 'Builders/Node Builder',
-    component: FormBuilder,
+    component: NodeBuilder,
     argTypes: {
         elType: {options: ['text', 'number', 'select']},
         subtype: {control: 'select', options: ['radio', 'select', 'checkbox'], if: {arg: 'elType', eq: 'select'}},
@@ -79,7 +79,7 @@ const meta: Meta<FormPropsAndCustomArgs> = {
         const props = {...args}
 
         return {
-            components: {FormBuilder},
+            components: {NodeBuilder},
             setup() {
                 return {args, props}
             },
@@ -97,7 +97,7 @@ const meta: Meta<FormPropsAndCustomArgs> = {
 }
 
 export default meta
-type Story = StoryObj<typeof FormBuilder>
+type Story = StoryObj<typeof NodeBuilder>
 
 export const Main: Story = {
     name: 'Select type arrays',

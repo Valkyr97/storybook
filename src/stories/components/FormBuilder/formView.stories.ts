@@ -1,5 +1,5 @@
 import {Meta, StoryObj} from "@storybook/vue3";
-import FormView from "../../../components/FormBuilder/formView.vue";
+import {FormView} from "../../../index.ts";
 import {FormField, FormSection} from "../../../components/FormBuilder/types/formBuilderTypes.ts";
 import {ComponentProps} from "vue-component-type-helpers";
 
