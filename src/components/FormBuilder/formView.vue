@@ -36,8 +36,13 @@ const props = withDefaults(defineProps<{
    * Sections that will determine the form.
    */
   sections: ISection[]
+  /**
+   * Determine if the form should use the submit default button
+   */
+  defaultAction?: boolean
 }>(), {
-  initialPrice: 0
+  initialPrice: 0,
+  defaultAction: true
 });
 
 // const selectInputs = ['radio', 'select', 'checkbox']
@@ -86,7 +91,7 @@ const price = computed(() => {
     <!--    <FormKitSchema :schema="schema"/>-->
     <div v-for="section in sections">
       <h1 class="form-title" v-if="section.title">{{ section.title }}</h1>
-      <FormKit type="form">
+      <FormKit type="form" :actions="defaultAction">
         <template v-for="field in section.fields">
           <form-builder :id="field.name"
                         :el-type="field.type"

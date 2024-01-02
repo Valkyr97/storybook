@@ -116,7 +116,7 @@ const meta: Meta<FormViewAndCustomArgs> = {
         }
     },
     argTypes: {
-        initialPrice: {control: 'number'}
+        initialPrice: {control: 'number'},
     },
     tags: ['autodocs']
 }
