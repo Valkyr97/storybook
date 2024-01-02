@@ -100,9 +100,11 @@ const price = computed(() => {
         </template>
       </FormKit>
     </div>
-    <div>
-      {{ price }}
-    </div>
+    <slot name="priceZone" :price="price">
+      <span>
+        Price: {{ price }}
+      </span>
+    </slot>
   </div>
 
 </template>
