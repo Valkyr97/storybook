@@ -11,14 +11,14 @@ const adjustSections = (sections: {
     sections.map(section => (
         {
             ...section,
-            fields: section.fields.map(({name, ...field}) => {
+            fields: section.fields.map((field) => {
                 return {
                     ...field,
-                    id: name,
+                    id: field.name,
                     options: field.options?.map((o: any) => typeof o === 'object' ? o.value : o),
-                    conditions: field.conditions?.map(({name, ...c}) => ({
+                    conditions: field.conditions?.map((c) => ({
                         ...c,
-                        id: name
+                        id: c.name
                     }))
                 }
             })
