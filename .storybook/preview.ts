@@ -1,11 +1,10 @@
 import type {Preview} from "@storybook/vue3";
 import {setup} from '@storybook/vue3'
 import {plugin, defaultConfig} from '@formkit/vue'
-import config from '../formkit.config'
 import '../src/tailwind.css'
 
 setup((app) => {
-    app.use(plugin, defaultConfig(config))
+    app.use(plugin, defaultConfig)
 })
 
 const preview: Preview = {

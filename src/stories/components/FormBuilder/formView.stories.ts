@@ -120,7 +120,7 @@ const meta: Meta<FormViewAndCustomArgs> = {
     },
     parameters: {
         controls: {
-            exclude: ['priceZone']
+            exclude: ['priceZone', 'customFormkitConfig']
         }
     },
     tags: ['autodocs']

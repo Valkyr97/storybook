@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import {computed, ref} from "vue";
+import {FormKitProvider} from '@formkit/vue'
+import {FormKitOptions} from '@formkit/core'
+import config from './formkit.config.ts'
 import FormBuilder from "./NodeBuilder.vue";
 import {
   comparisonOperatorValue,
@@ -44,27 +47,20 @@ const props = withDefaults(defineProps<{
    * Classes for the node component
    */
   nodeClasses?: string
+  /**
+   * Custom Formkit Config
+   */
+  customFormkitConfig?: FormKitOptions
 }>(), {
   initialPrice: 0,
   defaultAction: true
 });
 
-// const selectInputs = ['radio', 'select', 'checkbox']
-
-const priceModifiersAdjust = (modifiers?: Array<{
-  condition?: FormCondition;
-  operator: mathOperator | mathOperatorValue;
-  value: string
-}> | undefined) => {
-  return modifiers?.map(m => ({
-    condOperator: m.condition?.operator,
-    condValue: m.condition?.value,
-    operation: `${m.operator} ${m.value}`
-  }))
-}
-
+// State
 const modifiers = ref([] as any[])
+const formkitConfig: FormKitOptions = props.customFormkitConfig || config
 
+// Getters
 const addModifier = (operation: string, id?: string) => {
   if (!id) return
   modifiers.value = [...modifiers.value, {id, operation}]
@@ -88,6 +84,19 @@ const price = computed(() => {
     }
   }, props.initialPrice)
 })
+
+// Actions
+const priceModifiersAdjust = (modifiers?: Array<{
+  condition?: FormCondition;
+  operator: mathOperator | mathOperatorValue;
+  value: string
+}> | undefined) => {
+  return modifiers?.map(m => ({
+    condOperator: m.condition?.operator,
+    condValue: m.condition?.value,
+    operation: `${m.operator} ${m.value}`
+  }))
+}
 </script>
 
 <template>
@@ -95,19 +104,21 @@ const price = computed(() => {
     <!--    <FormKitSchema :schema="schema"/>-->
     <div v-for="section in sections">
       <h1 class="form-title" v-if="section.title">{{ section.title }}</h1>
-      <FormKit type="form" :actions="defaultAction">
-        <template v-for="field in section.fields">
-          <form-builder :id="field.name"
-                        :el-type="field.type"
-                        :label="field.label"
-                        :options="field.options"
-                        :viewCondition="field.conditions"
-                        :priceModifiers="priceModifiersAdjust(field.cost)"
-                        @add-modifier="(operation, id) => addModifier(operation, id)"
-                        @remove-modifier="(operation, id) => removeModifier(operation, id)"
-          />
-        </template>
-      </FormKit>
+      <FormKitProvider :config="formkitConfig">
+        <FormKit type="form" :actions="defaultAction">
+          <template v-for="field in section.fields">
+            <form-builder :id="field.name"
+                          :el-type="field.type"
+                          :label="field.label"
+                          :options="field.options"
+                          :viewCondition="field.conditions"
+                          :priceModifiers="priceModifiersAdjust(field.cost)"
+                          @add-modifier="(operation, id) => addModifier(operation, id)"
+                          @remove-modifier="(operation, id) => removeModifier(operation, id)"
+            />
+          </template>
+        </FormKit>
+      </FormKitProvider>
     </div>
     <slot name="priceZone" :price="price">
       <span>
