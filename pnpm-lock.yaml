@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@formkit/core':
+    specifier: ^1.4.0
+    version: 1.4.0
   '@formkit/vue':
     specifier: ^1.4.0
     version: 1.4.0(tailwindcss@3.4.0)(typescript@5.3.3)
