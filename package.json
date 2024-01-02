@@ -2,7 +2,7 @@
   "name": "janymaro-storybook-components",
   "private": false,
   "license": "MIT",
-  "types": "dist/types/index.d.ts",
+  "types": "dist/index.d.ts",
   "module": "dist/index.js",
   "main": "dist/index.umd.cjs",
   "repository": {

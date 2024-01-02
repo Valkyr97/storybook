@@ -100,32 +100,30 @@ const priceModifiersAdjust = (modifiers?: Array<{
 </script>
 
 <template>
-  <div class="flex flex-col">
-    <!--    <FormKitSchema :schema="schema"/>-->
-    <div v-for="section in sections">
-      <h1 class="form-title" v-if="section.title">{{ section.title }}</h1>
-      <FormKitProvider :config="formkitConfig">
-        <FormKit type="form" :actions="defaultAction">
-          <template v-for="field in section.fields">
-            <form-builder :id="field.name"
-                          :el-type="field.type"
-                          :label="field.label"
-                          :options="field.options"
-                          :viewCondition="field.conditions"
-                          :priceModifiers="priceModifiersAdjust(field.cost)"
-                          @add-modifier="(operation, id) => addModifier(operation, id)"
-                          @remove-modifier="(operation, id) => removeModifier(operation, id)"
-            />
-          </template>
-        </FormKit>
-      </FormKitProvider>
-    </div>
-    <slot name="priceZone" :price="price">
-      <span>
-        Price: {{ price }}
-      </span>
-    </slot>
-  </div>
+  <!--    <FormKitSchema :schema="schema"/>-->
+  <FormKitProvider :config="formkitConfig">
+    <FormKit type="form" :actions="defaultAction">
+      <div v-for="section in sections">
+        <h1 class="form-title" v-if="section.title">{{ section.title }}</h1>
+        <template v-for="field in section.fields">
+          <form-builder :id="field.name"
+                        :el-type="field.type"
+                        :label="field.label"
+                        :options="field.options"
+                        :viewCondition="field.conditions"
+                        :priceModifiers="priceModifiersAdjust(field.cost)"
+                        @add-modifier="(operation, id) => addModifier(operation, id)"
+                        @remove-modifier="(operation, id) => removeModifier(operation, id)"
+          />
+        </template>
+      </div>
+      <slot name="priceZone" :price="price">
+          <span>
+            Price: {{ price }}
+          </span>
+      </slot>
+    </FormKit>
+  </FormKitProvider>
 
 </template>
 
