@@ -48,6 +48,14 @@ const props = withDefaults(defineProps<{
    */
   nodeClasses?: string
   /**
+   *  Personalized classes for sections styling
+   */
+  sectionClasses?: string
+  /**
+   * Personalized classes for sections wrappers
+   */
+  sectionWrapperClasses?: string
+  /**
    * Custom Formkit Config
    */
   customFormkitConfig?: FormKitOptions
@@ -103,19 +111,21 @@ const priceModifiersAdjust = (modifiers?: Array<{
   <!--    <FormKitSchema :schema="schema"/>-->
   <FormKitProvider :config="formkitConfig">
     <FormKit type="form" :actions="defaultAction">
-      <div v-for="section in sections">
-        <h1 class="form-title" v-if="section.title">{{ section.title }}</h1>
-        <template v-for="field in section.fields">
-          <form-builder :id="field.name"
-                        :el-type="field.type"
-                        :label="field.label"
-                        :options="field.options"
-                        :viewCondition="field.conditions"
-                        :priceModifiers="priceModifiersAdjust(field.cost)"
-                        @add-modifier="(operation, id) => addModifier(operation, id)"
-                        @remove-modifier="(operation, id) => removeModifier(operation, id)"
-          />
-        </template>
+      <div :class="sectionWrapperClasses">
+        <div :class="sectionClasses" v-for="section in sections">
+          <h1 class="section-title" v-if="section.title">{{ section.title }}</h1>
+          <template v-for="field in section.fields">
+            <form-builder :id="field.name"
+                          :el-type="field.type"
+                          :label="field.label"
+                          :options="field.options"
+                          :viewCondition="field.conditions"
+                          :priceModifiers="priceModifiersAdjust(field.cost)"
+                          @add-modifier="(operation, id) => addModifier(operation, id)"
+                          @remove-modifier="(operation, id) => removeModifier(operation, id)"
+            />
+          </template>
+        </div>
       </div>
       <slot name="priceZone" :price="price">
           <span>
