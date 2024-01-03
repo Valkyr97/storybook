@@ -27,7 +27,9 @@ export interface ISection {
   }[]
 }
 
-[]
+defineOptions({
+  inheritAttrs: false
+})
 
 
 const props = withDefaults(defineProps<{
