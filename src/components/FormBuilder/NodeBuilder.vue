@@ -19,6 +19,10 @@ const props = defineProps<{
    */
   label?: string
   /**
+   * Placeholder for the Form
+   */
+  placeholder?: string
+  /**
    * Options in case the element is a select, checkbox or radio type
    */
   options?: string[]
@@ -52,11 +56,8 @@ const currentValue = ref()
 // Getters
 const schemaDefinition = computed(() => {
   return nodeBuilder(props.elType, {
-    options: props.options,
-    id: props.id,
     conditions: props.viewCondition,
-    label: props.label,
-    validation: props.validation
+    ...props
   })
 })
 

@@ -117,14 +117,14 @@ const priceModifiersAdjust = (modifiers?: Array<{
         <div :class="sectionClasses" v-for="section in sections">
           <h1 class="section-title" v-if="section.title">{{ section.title }}</h1>
           <template v-for="field in section.fields">
-            <form-builder :id="field.name"
-                          :el-type="field.type"
-                          :label="field.label"
-                          :options="field.options"
-                          :viewCondition="field.conditions"
-                          :priceModifiers="priceModifiersAdjust(field.cost)"
-                          @add-modifier="(operation, id) => addModifier(operation, id)"
-                          @remove-modifier="(operation, id) => removeModifier(operation, id)"
+            <form-builder
+                v-bind="field"
+                :el-type="field.type"
+                :id="field.name"
+                :viewCondition="field.conditions"
+                :priceModifiers="priceModifiersAdjust(field.cost)"
+                @add-modifier="(operation, id) => addModifier(operation, id)"
+                @remove-modifier="(operation, id) => removeModifier(operation, id)"
             />
           </template>
         </div>
