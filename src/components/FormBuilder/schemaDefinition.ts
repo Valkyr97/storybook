@@ -7,18 +7,21 @@ export const nodeBuilder = (type: IformType, config: {
     options?: any[],
     conditions?: IConditions[]
     validation?: any,
+    placeholder?: string,
 }) => {
     const {
         label,
         id,
         options,
         conditions,
-        validation
+        validation,
+        placeholder
     } = config
     const node: any = {
         $formkit: type,
         id,
         label,
+        placeholder
     }
 
     if (options && options.length > 0) {
