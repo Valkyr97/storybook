@@ -13,6 +13,11 @@ export const operatorToSymbol = {
     'NotEqual': '!=='
 }
 
+export const connectorToSymbol = {
+    'OR': '||',
+    "AND": "&&"
+}
+
 export const conditionValidator = /^.+?\s+(?:===|\|\||>=|>|<=|<|!==)\s+.*$/
 
 export const sortOperationBySetFirst = (a: string, b: string) => {

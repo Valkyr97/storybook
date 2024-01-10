@@ -1,5 +1,5 @@
 import {IConditions, IformType} from "./types/formBuilderTypes.ts";
-import {operatorToSymbol} from "./helpers.ts";
+import {connectorToSymbol, operatorToSymbol} from "./helpers.ts";
 
 export const nodeBuilder = (type: IformType, config: {
     label?: string,
@@ -34,7 +34,7 @@ export const nodeBuilder = (type: IformType, config: {
             if (currentIndex === 0) {
                 return previousValue + condition
             } else {
-                return previousValue + `&& ${condition}`
+                return previousValue + `${connectorToSymbol[currentValue.connector]} ${condition}`
             }
         }, '')
     }

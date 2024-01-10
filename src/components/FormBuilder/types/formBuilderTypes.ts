@@ -14,6 +14,8 @@ export interface IConditions {
     id?: string
     operator: comparisonOperatorValue,
     value: any
+    connector: 'OR' | 'AND'
+    isNegation: boolean
 }
 
 export type comparisonOperatorValue =
