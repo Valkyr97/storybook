@@ -45,11 +45,6 @@ const props = defineProps<{
   }[]
 }>();
 
-const emits = defineEmits<{
-  (e: 'addModifier', operation: string, id?: string): void
-  (e: 'removeModifier', operation: string, id?: string): void
-}>();
-
 // State
 const currentValue = ref()
 
@@ -57,7 +52,11 @@ const currentValue = ref()
 const schemaDefinition = computed(() => {
   return nodeBuilder(props.elType, {
     conditions: props.viewCondition,
-    ...props
+    id: props.id,
+    label: props.label,
+    options: props.options,
+    placeholder: props.placeholder,
+    validation: props.validation
   })
 })
 
@@ -77,12 +76,10 @@ watch(() => currentValue.value, () => {
 
     if (eval(condition) && !activeModifiers.value[index]) {
       console.log('add from component')
-      emits('addModifier', mod.operation, props.id)
       activeModifiers.value[index] = true
     }
     if (!eval(condition) && activeModifiers.value[index]) {
       console.log('remove from component')
-      emits('removeModifier', mod.operation, props.id)
       activeModifiers.value[index] = false
     }
   })

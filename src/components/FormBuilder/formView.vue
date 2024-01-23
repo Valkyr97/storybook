@@ -5,8 +5,7 @@ import {FormKitOptions} from '@formkit/core'
 import config from './formkit.config.ts'
 import FormBuilder from "./NodeBuilder.vue";
 import {
-  comparisonOperatorValue,
-  FormCondition, FormCostItem, IformType,
+  FormCondition, FormCostItem, IConditions, IformType,
   mathOperator, mathOperatorValue
 } from "./types/formBuilderTypes.ts";
 
@@ -21,7 +20,7 @@ export interface ISection {
     options: string[] | undefined,
     label?: string,
     id: string,
-    conditions: { id: string, value: string, operator: comparisonOperatorValue }[],
+    conditions: IConditions[],
     type: IformType,
     validation?: any
   }[]
@@ -41,26 +40,32 @@ const props = withDefaults(defineProps<{
    * Sections that will determine the form.
    */
   sections: ISection[]
+
   /**
-   * Determine if the form should use the submit default button
+   * Options to configure the form
    */
-  defaultAction?: boolean
-  /**
-   * Classes for the node component
-   */
-  nodeClasses?: string
-  /**
-   *  Personalized classes for sections styling
-   */
-  sectionClasses?: string
-  /**
-   * Personalized classes for sections wrappers
-   */
-  sectionWrapperClasses?: string
-  /**
-   * Custom Formkit Config
-   */
-  customFormkitConfig?: FormKitOptions
+  options: {
+    /**
+     * Determine if the form should use the submit default button
+     */
+    defaultAction?: boolean
+    /**
+     * Classes for the node component
+     */
+    nodeClasses?: string
+    /**
+     *  Personalized classes for sections styling
+     */
+    sectionClasses?: string
+    /**
+     * Personalized classes for sections wrappers
+     */
+    sectionWrapperClasses?: string
+    /**
+     * Custom Formkit Config
+     */
+    customFormkitConfig?: FormKitOptions
+  }
 }>(), {
   initialPrice: 0,
   defaultAction: true
@@ -68,7 +73,7 @@ const props = withDefaults(defineProps<{
 
 // State
 const modifiers = ref([] as any[])
-const formkitConfig: FormKitOptions = props.customFormkitConfig || config
+const formkitConfig: FormKitOptions = props.options.customFormkitConfig || config
 
 // Getters
 const addModifier = (operation: string, id?: string) => {
@@ -112,8 +117,8 @@ const priceModifiersAdjust = (modifiers?: Array<{
 <template>
   <!--    <FormKitSchema :schema="schema"/>-->
   <FormKitProvider :config="formkitConfig">
-    <div :class="sectionWrapperClasses">
-      <div :class="sectionClasses" v-for="section in sections">
+    <div :class="options.sectionWrapperClasses">
+      <div :class="options.sectionClasses" v-for="section in sections">
         <h1 class="section-title" v-if="section.title">{{ section.title }}</h1>
         <template v-for="field in section.fields">
           <form-builder
