@@ -1,13 +1,19 @@
 <script setup lang="ts">
 import {computed, ref} from "vue";
 import {FormKitProvider} from '@formkit/vue'
-import {FormKitOptions} from '@formkit/core'
+import {FormKitOptions, getNode} from '@formkit/core'
 import config from './formkit.config.ts'
 import FormBuilder from "./NodeBuilder.vue";
 import {
-  FormCondition, FormCostItem, IConditions, IformType,
-  mathOperator, mathOperatorValue
+  FormCondition,
+  FormCostItem,
+  IConditions,
+  IformType,
+  IPriceModifier,
+  mathOperator,
+  mathOperatorValue
 } from "./types/formBuilderTypes.ts";
+import {conditionValidator, operatorToSymbol} from "./helpers.ts";
 
 
 export interface ISection {
@@ -65,6 +71,10 @@ const props = withDefaults(defineProps<{
      * Custom Formkit Config
      */
     customFormkitConfig?: FormKitOptions
+    /**
+     * Global price modifiers
+     */
+    priceModifiers?: IPriceModifier[]
   }
 }>(), {
   initialPrice: 0,
@@ -73,18 +83,18 @@ const props = withDefaults(defineProps<{
 
 // State
 const modifiers = ref([] as any[])
-const formkitConfig: FormKitOptions = props.options.customFormkitConfig || config
+const activeModifiers = ref(Array(props.options?.priceModifiers?.length).fill(false))
+const formkitConfig: FormKitOptions = props.options?.customFormkitConfig || config
 
 // Getters
-const addModifier = (operation: string, id?: string) => {
-  if (!id) return
-  modifiers.value = [...modifiers.value, {id, operation}]
-}
 
-const removeModifier = (operation: string, id?: string) => {
-  if (!id) return
-  modifiers.value = modifiers.value.filter(m => (m.operation !== operation))
-}
+const modifierIds = computed(() => props.options?.priceModifiers?.flatMap(mod => {
+  let ids = mod.conditions.map(cond => cond.name)
+  if (mod.field) {
+    ids.push(mod.field)
+  }
+  return ids
+}))
 
 const price = computed(() => {
   return modifiers.value.reduce((previousValue, currentValue) => {
@@ -101,6 +111,63 @@ const price = computed(() => {
 })
 
 // Actions
+
+const handleChange = (id: string) => {
+  if (!props.options.priceModifiers || props.options.priceModifiers.length < 1) return
+  if (!modifierIds.value?.includes(id)) return
+
+  const priceModifiers = props.options.priceModifiers
+
+  for (let i = 0; i < priceModifiers.length; i++) {
+
+    const allConditionsEval = priceModifiers[i].conditions.every(cond => {
+      if (!cond?.name) return false
+
+      const node = getNode(cond.name)?._value as number
+
+      let condition = `${isNaN(node)
+          ? `"${node}"` : `${Number(node)}`}
+           ${operatorToSymbol[cond.operator]}
+           ${isNaN(cond.value) ? `"${cond.value}"` : `${cond.value}`}`
+
+      if (!conditionValidator.test(condition)) return false
+
+      return (eval(condition))
+    })
+
+    if (allConditionsEval && !activeModifiers.value[i]) {
+      activeModifiers.value[i] = true
+
+      const value = Number(priceModifiers[i].field && getNode(priceModifiers[i].field!)?._value)
+
+      if (value) {
+        const finalValue = priceModifiers[i].operator === mathOperator.Add
+            ? value + Number(priceModifiers[i].value)
+            : priceModifiers[i].operator === mathOperator.Mul && value * Number(priceModifiers[i].value)
+
+        addModifier(`${mathOperator.Add} ${finalValue}`, i)
+      } else if (!priceModifiers[i].field) {
+        addModifier(`${priceModifiers[i].operator} ${priceModifiers[i].value}`, i)
+      }
+
+      modifiers.value = modifiers.value.sort((a, b) => a.id - b.id);
+    }
+
+    if (!allConditionsEval && activeModifiers.value[i]) {
+      activeModifiers.value[i] = false
+      removeModifier(i)
+    }
+  }
+}
+
+const addModifier = (operation: string, id: number) => {
+  modifiers.value = [...modifiers.value, {id, operation}]
+}
+
+const removeModifier = (id: number) => {
+  modifiers.value = modifiers.value.filter(m => (m.id !== id))
+}
+
 const priceModifiersAdjust = (modifiers?: Array<{
   condition?: FormCondition;
   operator: mathOperator | mathOperatorValue;
@@ -117,8 +184,8 @@ const priceModifiersAdjust = (modifiers?: Array<{
 <template>
   <!--    <FormKitSchema :schema="schema"/>-->
   <FormKitProvider :config="formkitConfig">
-    <div :class="options.sectionWrapperClasses">
-      <div :class="options.sectionClasses" v-for="section in sections">
+    <div :class="options?.sectionWrapperClasses">
+      <div :class="options?.sectionClasses" v-for="section in sections">
         <h1 class="section-title" v-if="section.title">{{ section.title }}</h1>
         <template v-for="field in section.fields">
           <form-builder
@@ -127,8 +194,7 @@ const priceModifiersAdjust = (modifiers?: Array<{
               :id="field.name"
               :viewCondition="field.conditions"
               :priceModifiers="priceModifiersAdjust(field.cost)"
-              @add-modifier="(operation, id) => addModifier(operation, id)"
-              @remove-modifier="(operation, id) => removeModifier(operation, id)"
+              @input="() => {handleChange(field.id)}"
           />
         </template>
       </div>

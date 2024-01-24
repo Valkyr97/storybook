@@ -55,6 +55,7 @@ export interface FormCondition {
     name: string;
     operator: comparisonOperatorValue;
     value: string;
+    connector?: 'AND' | 'OR'
 }
 
 export interface FormCostItem {
@@ -79,6 +80,8 @@ export type FormField = {
     mutable?: boolean;
     /** A reference (private) name for this field. */
     name: string;
+    /** A description for the field*/
+    description?: string
     /** A list of options for this field. */
     options?: Array<FormOptionItem>;
     /** Whether this field should only be visible for the submitter (and not to admins). */
@@ -89,14 +92,17 @@ export type FormField = {
     validation?: any;
 }
 
-export interface IPriceModifiers {
-    condition: ICondition,
-    operator: comparisonOperator | comparisonOperatorValue,
+export interface IPriceModifier {
+    conditions: ICondition[],
+    field: string | null,
+    operator: mathOperator | mathOperatorValue,
     value: string
 }
 
 export interface ICondition {
     name?: string,
-    operator: comparisonOperatorValue | comparisonOperator,
+    operator: string,
+    isNegation?: boolean
+    conector?: '&&' | '||'
     value: string
 }

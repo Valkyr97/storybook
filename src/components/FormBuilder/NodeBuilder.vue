@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import {FormKitSchema} from '@formkit/vue'
-import {computed, ref, watch} from "vue";
+import {computed, ref} from "vue";
 import {nodeBuilder} from "./schemaDefinition.ts";
 import {comparisonOperatorValue, IConditions, IformType} from "./types/formBuilderTypes.ts";
-import {conditionValidator, operatorToSymbol} from "./helpers.ts";
 
 const props = defineProps<{
   /**
@@ -60,30 +59,6 @@ const schemaDefinition = computed(() => {
   })
 })
 
-const activeModifiers = ref(Array(props.priceModifiers?.length).fill(false))
-
-watch(() => currentValue.value, () => {
-  if (!props.priceModifiers) return
-
-  props.priceModifiers.forEach((mod, index) => {
-    if (!mod.condOperator || !mod.condValue) return
-    const condition =
-        `${isNaN(currentValue.value)
-            ? `"${currentValue.value}"` : `${Number(currentValue.value)}`}
-            ${operatorToSymbol[mod.condOperator]}
-            ${isNaN(mod.condValue) ? `"${mod.condValue}"` : `${mod.condValue}`}`
-    if (!conditionValidator.test(condition)) return false
-
-    if (eval(condition) && !activeModifiers.value[index]) {
-      console.log('add from component')
-      activeModifiers.value[index] = true
-    }
-    if (!eval(condition) && activeModifiers.value[index]) {
-      console.log('remove from component')
-      activeModifiers.value[index] = false
-    }
-  })
-})
 </script>
 
 <template>
