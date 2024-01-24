@@ -101,8 +101,8 @@ export interface IPriceModifier {
 
 export interface ICondition {
     name?: string,
-    operator: string,
+    operator: comparisonOperator | comparisonOperatorValue,
     isNegation?: boolean
-    conector?: '&&' | '||'
-    value: string
+    connector?: 'AND' | 'OR'
+    value: number
 }
