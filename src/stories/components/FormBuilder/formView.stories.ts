@@ -30,35 +30,46 @@ const sectionsData: FormSection[] = [
         "title": "",
         "fields": [
             {
-                "name": "lqo46usg_gs3075kl",
+                "name": "lrr2p7u9_j129ndfp",
                 "label": "Edad",
                 "type": "number",
                 "mutable": true,
                 "private": false,
                 "conditions": [],
                 "options": [],
-                "cost": [
-                    {
-                        "condition": {
-                            "name": "lqo46usg_gs3075kl",
-                            "operator": "GREATER_EQUAL",
-                            "value": "18"
-                        },
-                        "operator": "ADD",
-                        "value": "2"
-                    }
-                ]
+                "validation": {
+                    "required": null,
+                    "alpha": null,
+                    "alpha_spaces": null,
+                    "alpha_numeric": null,
+                    "confirm": null,
+                    "contains": null,
+                    "date_after": null,
+                    "date_before": null,
+                    "date_format": null,
+                    "is": [
+                        "float"
+                    ],
+                    "length": null,
+                    "matches": null,
+                    "max": null,
+                    "min": null,
+                    "not": null,
+                    "url": null
+                }
             },
             {
-                "name": "lqo46vfs_f2b02lo0",
+                "name": "lrr2qkij_nautg1yf",
                 "label": "Bebida preferida",
                 "type": "radio",
+                "description": undefined,
                 "mutable": true,
                 "private": false,
                 "conditions": [
                     {
-                        "name": "lqo46usg_gs3075kl",
+                        "name": "lrr2p7u9_j129ndfp",
                         "operator": "GREATER_EQUAL",
+                        "connector": 'AND',
                         "value": "18"
                     }
                 ],
@@ -72,28 +83,78 @@ const sectionsData: FormSection[] = [
                         "value": "Cerveza"
                     }
                 ],
-                "cost": [
-                    {
-                        "condition": {
-                            "name": "lqo46vfs_f2b02lo0",
-                            "operator": "EQUAL",
-                            "value": "Ron"
-                        },
-                        "operator": "ADD",
-                        "value": "4"
-                    },
-                    {
-                        "condition": {
-                            "name": "lqo46vfs_f2b02lo0",
-                            "operator": "EQUAL",
-                            "value": "Cerveza"
-                        },
-                        "operator": "ADD",
-                        "value": "3"
-                    }
-                ]
+                "validation": {
+                    "required": null,
+                    "alpha": null,
+                    "alpha_spaces": null,
+                    "alpha_numeric": null,
+                    "confirm": null,
+                    "contains": null,
+                    "date_after": null,
+                    "date_before": null,
+                    "date_format": null,
+                    "is": null,
+                    "length": null,
+                    "matches": null,
+                    "max": null,
+                    "min": null,
+                    "not": null,
+                    "url": null
+                }
             }
         ]
+    }
+]
+
+
+const costMods = [
+    {
+        "conditions": [],
+        "field": null,
+        "operator": "SET",
+        "value": "16"
+    },
+    {
+        "conditions": [
+            {
+                "name": "lrr2p7u9_j129ndfp",
+                "operator": "GREATER_EQUAL",
+                "conector": null,
+                "isNegation": null,
+                "value": "16"
+            }
+        ],
+        "field": null,
+        "operator": "ADD",
+        "value": "4"
+    },
+    {
+        "conditions": [
+            {
+                "name": "lrr2qkij_nautg1yf",
+                "operator": "EQUAL",
+                "conector": null,
+                "isNegation": null,
+                "value": "Ron"
+            }
+        ],
+        "field": null,
+        "operator": "ADD",
+        "value": "10"
+    },
+    {
+        "conditions": [
+            {
+                "name": "lrr2qkij_nautg1yf",
+                "operator": "EQUAL",
+                "conector": null,
+                "isNegation": null,
+                "value": "Cerveza"
+            }
+        ],
+        "field": null,
+        "operator": "ADD",
+        "value": "6"
     }
 ]
 
@@ -131,8 +192,12 @@ type Story = StoryObj<typeof FormView>
 
 export const Default: Story = {
     args: {
-        initialPrice: 24,
+        initialPrice: 16,
         //@ts-ignore
-        sections: adjustSections(sectionsData)
+        sections: adjustSections(sectionsData),
+        options: {
+            //@ts-ignore
+            priceModifiers: costMods
+        }
     }
 }
