@@ -131,6 +131,20 @@ const costMods = [
     {
         "conditions": [
             {
+                "name": "lrr2p7u9_j129ndfp",
+                "operator": "GREATER_EQUAL",
+                "conector": null,
+                "isNegation": null,
+                "value": "1"
+            }
+        ],
+        "field": 'lrr2p7u9_j129ndfp',
+        "operator": "MUL",
+        "value": "4"
+    },
+    {
+        "conditions": [
+            {
                 "name": "lrr2qkij_nautg1yf",
                 "operator": "EQUAL",
                 "conector": null,
