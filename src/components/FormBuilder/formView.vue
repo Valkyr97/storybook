@@ -85,16 +85,15 @@ const props = withDefaults(defineProps<{
 const modifiers = ref([] as any[])
 const activeModifiers = ref(Array(props.options?.priceModifiers?.length).fill(false))
 const formkitConfig: FormKitOptions = props.options?.customFormkitConfig || config
-
-// Getters
-
-const modifierIds = computed(() => props.options?.priceModifiers?.flatMap(mod => {
-  let ids = mod.conditions.map(cond => cond.name)
+const modifierIds = new Set(props.options?.priceModifiers?.flatMap(mod => {
+  const ids = mod.conditions.map(cond => cond.name)
   if (mod.field) {
     ids.push(mod.field)
   }
   return ids
 }))
+
+// Getters
 
 const price = computed(() => {
   return modifiers.value.reduce((previousValue, currentValue) => {
@@ -114,7 +113,7 @@ const price = computed(() => {
 
 const handleChange = (id: string) => {
   if (!props.options.priceModifiers || props.options.priceModifiers.length < 1) return
-  if (!modifierIds.value?.includes(id)) return
+  if (!modifierIds?.has(id)) return
 
   const priceModifiers = props.options.priceModifiers
 
@@ -135,7 +134,7 @@ const handleChange = (id: string) => {
       return (eval(condition))
     })
 
-    if (allConditionsEval && !activeModifiers.value[i]) {
+    if (allConditionsEval) {
       activeModifiers.value[i] = true
 
       const value = Number(priceModifiers[i].field && getNode(priceModifiers[i].field!)?._value)
@@ -161,7 +160,21 @@ const handleChange = (id: string) => {
 }
 
 const addModifier = (operation: string, id: number) => {
-  modifiers.value = [...modifiers.value, {id, operation}]
+  const newModifiers = []
+  let exist = false
+  for (let mod of modifiers.value) {
+    if (mod.id === id) {
+      exist = true
+      newModifiers.push({operation, id})
+    } else {
+      newModifiers.push(mod)
+    }
+  }
+  if (exist) {
+    modifiers.value = newModifiers
+  } else {
+    modifiers.value = [...modifiers.value, {operation, id}]
+  }
 }
 
 const removeModifier = (id: number) => {
