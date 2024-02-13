@@ -1,6 +1,6 @@
 import {Meta, StoryObj} from "@storybook/vue3";
 import {FormView} from "../../../index.ts";
-import {FormField, FormSection} from "../../../components/FormBuilder/types/formBuilderTypes.ts";
+import {FormField, FormSection} from "../../../components/FormReader/types/formBuilderTypes.ts";
 import {ComponentProps} from "vue-component-type-helpers";
 
 const adjustSections = (sections: {

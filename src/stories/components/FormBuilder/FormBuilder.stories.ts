@@ -1,8 +1,8 @@
 import {Meta, StoryObj} from "@storybook/vue3";
 import {ComponentProps} from "vue-component-type-helpers";
 
-import FormBuilder from "../../../components/FormBuilder/NodeBuilder.vue";
-import {comparisonOperator} from "../../../components/FormBuilder/types/formBuilderTypes.ts";
+import FormBuilder from "../../../components/FormReader/NodeBuilder.vue";
+import {comparisonOperator} from "../../../components/FormReader/types/formBuilderTypes.ts";
 
 type FormPropsAndCustomArgs = ComponentProps<typeof FormBuilder> & CustomArgs
 type CustomArgs = {

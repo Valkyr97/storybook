@@ -2,9 +2,15 @@
   "name": "janymaro-storybook-components",
   "private": false,
   "license": "MIT",
-  "types": "dist/index.d.ts",
-  "module": "dist/index.js",
-  "main": "dist/index.umd.cjs",
+  "types": "./dist/index.d.ts",
+  "module": "./dist/index.js",
+  "main": "./dist/index.umd.cjs",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.umd.cjs"
+    }
+  },
   "repository": {
     "url": "https://github.com/Valkyr97/storybook",
     "type": "git"
@@ -36,7 +42,8 @@
   "dependencies": {
     "@formkit/core": "^1.4.0",
     "@formkit/vue": "^1.4.0",
-    "vue": "^3.3.11"
+    "vue": "^3.3.11",
+    "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",

@@ -14,6 +14,9 @@ dependencies:
   vue:
     specifier: ^3.3.11
     version: 3.3.13(typescript@5.3.3)
+  vuedraggable:
+    specifier: ^4.1.0
+    version: 4.1.0(vue@3.3.13)
 
 devDependencies:
   '@semantic-release/changelog':
@@ -8672,6 +8675,10 @@ packages:
     engines: {node: '>=14.16'}
     dev: true
 
+  /sortablejs@1.14.0:
+    resolution: {integrity: sha512-pBXvQCs5/33fdN1/39pPL0NZF20LeRbLQ5jtnheIPN9JQAaufGjKdWduZn4U7wCtVuzKhmRkI0DFYHYRbB2H1w==}
+    dev: false
+
   /source-map-js@1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
     engines: {node: '>=0.10.0'}
@@ -9519,6 +9526,15 @@ packages:
       '@vue/server-renderer': 3.3.13(vue@3.3.13)
       '@vue/shared': 3.3.13
       typescript: 5.3.3
+
+  /vuedraggable@4.1.0(vue@3.3.13):
+    resolution: {integrity: sha512-FU5HCWBmsf20GpP3eudURW3WdWTKIbEIQxh9/8GE806hydR9qZqRRxRE3RjqX7PkuLuMQG/A7n3cfj9rCEchww==}
+    peerDependencies:
+      vue: ^3.0.1
+    dependencies:
+      sortablejs: 1.14.0
+      vue: 3.3.13(typescript@5.3.3)
+    dev: false
 
   /walker@1.0.8:
     resolution: {integrity: sha512-ts/8E8l5b7kY0vlWLewOkDXMmPdLcVV4GmOQLyxuSswIJsweeFZtAsMF7k1Nszz+TYBQrlYRmzOnr398y1JemQ==}
